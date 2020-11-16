@@ -85,6 +85,44 @@ public class AlgoTowers {
         System.out.println(result*result);
         return result*result;
     }
+    public static boolean isRectangle(int x1,int y1,int x2,int y2,int h){
+        for (int i=x1;i<=x2;i++){
+            for (int j=y1;j<=y2;j++){
+                if (towers[i][j]<h){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public static int ALG2TASK3(int h){
+        int col=towers.length;
+        int row=towers[0].length;
+        int result=0;
+        int printX1=0, printY1=0, printX2=0, printY2=0;
+
+        for (int i=0;i<col;i++){
+            for (int j=0;j<row;j++){
+                for (int m=i;m<col;m++){
+                    for (int n=j;n<row;n++){
+                        if (isRectangle(i,j,m,n,h)){
+                            int tempArea=(m-i+1)*(n-j+1);
+                            if (tempArea>result){
+                                result=tempArea;
+                                printX1=i;
+                                printX2=j;
+                                printY1=m;
+                                printY2=n;
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        System.out.println(result);
+        return result;
+    }
     public static void main(String[] args){
         Scanner sc=new Scanner(System.in);
         String[] firstLine=sc.nextLine().split(" ");
@@ -109,6 +147,7 @@ public class AlgoTowers {
 
         ALG1TASK2(towers,5);
         ALG1TASK1(m-1,n-1,5);
+        ALG2TASK3(5);
 
         System.out.println(task1Result*task1Result);
         for (int i=0;i<memoization.length;i++){
