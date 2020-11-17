@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class AlgoTowers {
@@ -120,9 +121,82 @@ public class AlgoTowers {
 
             }
         }
-        System.out.println(result);
+        System.out.println("Task3"+result);
         return result;
     }
+
+    public static int ALG3TASK4(int h){
+        int row=towers.length;
+        int col=towers[0].length;
+        int[][] dp=new int[row][col];
+        int result=0;
+
+        for (int i=0;i<row;i++){
+            for (int j=0;j<col;j++){
+                if (towers[i][j]>=h){
+                    if (j==0){
+                        dp[i][j]=1;
+                    }else {
+                        dp[i][j]=dp[i][j-1]+1;
+                    }
+                    //dp[i][j]=j=0? 1 : dp[i][j-1]+1;
+                    int width=dp[i][j];
+                    for (int k=i;k>=0;k--){
+                        width=Math.min(width,dp[k][j]);
+                        result=Math.max(result,width*(i-k+1));
+                    }
+                }
+            }
+        }
+        System.out.println("Task4"+result);
+        return result;
+    }
+    public static int ALG3TASK5(int h){
+        int row=towers.length;
+        int col=towers[0].length;
+        int[] left=new int[row];
+        int[] right=new int[row];
+        int[] height=new int[row];
+
+        Arrays.fill(right,row);
+
+        int result=0;
+        for (int i=0;i<col;i++){
+            int cur_left=0,cur_right=col;
+            for (int j=0;j<col;j++){
+                if (towers[i][j]>=h){
+                    height[j]++;
+                }else {
+                    height[j]=0;
+                }
+            }
+            for (int j=0;j<col;j++){
+                if (towers[i][j]>=h){
+                    left[j]=Math.max(left[j],cur_left);
+                }else {
+                    left[j]=0;
+                    cur_left=j+1;
+                }
+            }
+
+            for (int j=col-1;j>=0;j--){
+                if (towers[i][j]>=h){
+                    right[j]=Math.min(right[j],cur_right);
+                }else {
+                    right[j]=col;
+                    cur_right=j;
+                }
+            }
+            for (int j=0;j<col;j++){
+                result=Math.max(result,(right[j]-left[j])*height[j]);
+            }
+
+        }
+        System.out.println("task5+ "+result);
+        return result;
+
+    }
+
     public static void main(String[] args){
         Scanner sc=new Scanner(System.in);
         String[] firstLine=sc.nextLine().split(" ");
@@ -148,6 +222,8 @@ public class AlgoTowers {
         ALG1TASK2(towers,5);
         ALG1TASK1(m-1,n-1,5);
         ALG2TASK3(5);
+        ALG3TASK4(5);
+        ALG3TASK5(5);
 
         System.out.println(task1Result*task1Result);
         for (int i=0;i<memoization.length;i++){
