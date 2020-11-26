@@ -5,7 +5,11 @@ public class AlgoTowers {
     static int[][] towers;
     static int[][] memoization;
     static int task1Result=0;
+    static int maxX;
+    static int maxY;
     public static int ALG1TASK1(int x,int y,int h){
+        //int maxX=0;
+        //int maxY=0;
 
         //The implementation of task1, a recursive implementation of ALG1 using memoization and O(mn) space.
 
@@ -21,15 +25,22 @@ public class AlgoTowers {
         }else if (memoization[x][y]!=Integer.MIN_VALUE) {
             return memoization[x][y];
         }else {
-
                 int result = Math.min(Math.min(ALG1TASK1(x - 1, y, h), ALG1TASK1(x, y - 1, h)), ALG1TASK1(x - 1, y - 1, h)) + 1;
                 if (towers[x][y]>=h) {
                     memoization[x][y] = result;
+                    if (result>task1Result){
+                        System.out.println("Current result "+task1Result+"Current position is"+x+" "+y);
+                        maxX=x;
+                        maxY=y;
+                        task1Result=result;
+                    }
+                    //task1Result=Math.max(task1Result,result);
+                    return result;
                 }else {
                     memoization[x][y] = 0;
+                    return 0;
                 }
-                task1Result=Math.max(task1Result,result);
-                return result;
+
                 //memoization[x][y]=0;
                 //return Math.min(Math.min(ALG1TASK1(x - 1, y, h), ALG1TASK1(x, y - 1, h)), ALG1TASK1(x - 1, y - 1, h)) + 1;
 
@@ -52,7 +63,12 @@ public class AlgoTowers {
                 temp=dp[j];
                 if (input[i-1][j-1]>=h){
                     dp[j]=Math.min(Math.min(dp[j-1],pre),dp[j])+1;
-                    result=Math.max(result,dp[j]);
+                    //result=Math.max(result,dp[j]);
+                    if (dp[j]>result){
+                        maxX=i;
+                        maxY=j;
+                        result=dp[j];
+                    }
                 }else {
                     dp[j]=0;
                 }
@@ -219,8 +235,12 @@ public class AlgoTowers {
         }
         System.out.println();
 
-        ALG1TASK2(towers,5);
+
         ALG1TASK1(m-1,n-1,5);
+        System.out.println("task1 result is "+ task1Result);
+        System.out.println((maxX+1)+" "+(maxY-task1Result+2)+" "+(maxX-task1Result+2)+" "+(maxY+1));
+        ALG1TASK2(towers,5);
+        System.out.println("Task2: "+maxX+" "+(maxY-task1Result+1)+" "+(maxX-task1Result+1)+" "+(maxY));
         ALG2TASK3(5);
         ALG3TASK4(5);
         ALG3TASK5(5);
