@@ -137,7 +137,7 @@ public class AlgoTowers {
 
             }
         }
-        System.out.println("Task3 "+result);
+        //System.out.println("Task3 "+result);
         System.out.println("Task3 "+(printX2+1)+" "+(printY1+1)+" "+(printX1+1)+" "+(printY2+1));
         //return result;
     }
@@ -180,9 +180,10 @@ public class AlgoTowers {
     public static int ALG3TASK5(int h){
         int row=towers.length;
         int col=towers[0].length;
-        int[] left=new int[row];
-        int[] right=new int[row];
-        int[] height=new int[row];
+        int[] left=new int[col];
+        int[] right=new int[col];
+        int[] height=new int[col];
+        int x1=0,y1=0,x2=0,y2=0;
 
         Arrays.fill(right,col);
 
@@ -191,7 +192,7 @@ public class AlgoTowers {
             int cur_left=0,cur_right=col;
             for (int j=0;j<col;j++){
                 if (towers[i][j]>=h){
-                    height[j]++;
+                    height[j]=height[j]+1;
                 }else {
                     height[j]=0;
                 }
@@ -215,14 +216,18 @@ public class AlgoTowers {
             }
             for (int j=0;j<col;j++){
                 if (((right[j]-left[j])*height[j])>result){
-                    System.out.println("Task5: "+(i+1)+" "+(left[j]+1)+" "+(i+1-height[j]+1)+" "+right[j]);
+                    x1=i+1;
+                    y1=left[j]+1;
+                    x2=i+1-height[j]+1;
+                    y2=right[j];
+                    //System.out.println("Task5: "+(i+1)+" "+(left[j]+1)+" "+(i+1-height[j]+1)+" "+right[j]);
                     result=(right[j]-left[j])*height[j];
                 }
 
             }
 
         }
-        System.out.println("task5+ "+result);
+        System.out.println("task5+ "+x1+" "+y1+" "+x2+" "+y2);
         return result;
 
     }
