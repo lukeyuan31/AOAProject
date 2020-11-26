@@ -29,7 +29,7 @@ public class AlgoTowers {
                 if (towers[x][y]>=h) {
                     memoization[x][y] = result;
                     if (result>task1Result){
-                        System.out.println("Current result "+task1Result+"Current position is"+x+" "+y);
+                        //System.out.println("Current result "+task1Result+"Current position is"+x+" "+y);
                         maxX=x;
                         maxY=y;
                         task1Result=result;
@@ -74,10 +74,10 @@ public class AlgoTowers {
                 }
                 pre=temp;
             }
-            for (int x:dp){
+            /*for (int x:dp){
                 System.out.print(x+" ");
             }
-            System.out.println();
+            System.out.println();*/
 
         }
 
@@ -99,7 +99,7 @@ public class AlgoTowers {
             }
         }*/
 
-        System.out.println(result*result);
+        //System.out.println(result*result);
         return result*result;
     }
     public static boolean isRectangle(int x1,int y1,int x2,int y2,int h){
@@ -112,7 +112,7 @@ public class AlgoTowers {
         }
         return true;
     }
-    public static int ALG2TASK3(int h){
+    public static void ALG2TASK3(int h){
         int col=towers.length;
         int row=towers[0].length;
         int result=0;
@@ -127,8 +127,8 @@ public class AlgoTowers {
                             if (tempArea>result){
                                 result=tempArea;
                                 printX1=i;
-                                printX2=j;
-                                printY1=m;
+                                printY1=j;
+                                printX2=m;
                                 printY2=n;
                             }
                         }
@@ -137,8 +137,9 @@ public class AlgoTowers {
 
             }
         }
-        System.out.println("Task3"+result);
-        return result;
+        System.out.println("Task3 "+result);
+        System.out.println("Task3 "+(printX2+1)+" "+(printY1+1)+" "+(printX1+1)+" "+(printY2+1));
+        //return result;
     }
 
     public static int ALG3TASK4(int h){
@@ -146,6 +147,7 @@ public class AlgoTowers {
         int col=towers[0].length;
         int[][] dp=new int[row][col];
         int result=0;
+        int x1 = 0,y1=0,x2=0,y2=0;
 
         for (int i=0;i<row;i++){
             for (int j=0;j<col;j++){
@@ -159,12 +161,20 @@ public class AlgoTowers {
                     int width=dp[i][j];
                     for (int k=i;k>=0;k--){
                         width=Math.min(width,dp[k][j]);
-                        result=Math.max(result,width*(i-k+1));
+                        if (width*(i-k+1)>result){
+                            //System.out.println("Task4 "+i+" "+j+" k: "+(i-k+1)+"width: "+width);
+                            x1=i+1;
+                            y1=j+1-width+1;
+                            x2=k+1;
+                            y2=j+1;
+                            result=width*(i-k+1);
+                        }
+                        //result=Math.max(result,width*(i-k+1));
                     }
                 }
             }
         }
-        System.out.println("Task4"+result);
+        System.out.println("Task4: "+x1+" "+y1+" "+x2+" "+y2);
         return result;
     }
     public static int ALG3TASK5(int h){
@@ -174,10 +184,10 @@ public class AlgoTowers {
         int[] right=new int[row];
         int[] height=new int[row];
 
-        Arrays.fill(right,row);
+        Arrays.fill(right,col);
 
         int result=0;
-        for (int i=0;i<col;i++){
+        for (int i=0;i<row;i++){
             int cur_left=0,cur_right=col;
             for (int j=0;j<col;j++){
                 if (towers[i][j]>=h){
@@ -204,7 +214,11 @@ public class AlgoTowers {
                 }
             }
             for (int j=0;j<col;j++){
-                result=Math.max(result,(right[j]-left[j])*height[j]);
+                if (((right[j]-left[j])*height[j])>result){
+                    System.out.println("Task5: "+(i+1)+" "+(left[j]+1)+" "+(i+1-height[j]+1)+" "+right[j]);
+                    result=(right[j]-left[j])*height[j];
+                }
+
             }
 
         }
@@ -237,21 +251,21 @@ public class AlgoTowers {
 
 
         ALG1TASK1(m-1,n-1,5);
-        System.out.println("task1 result is "+ task1Result);
-        System.out.println((maxX+1)+" "+(maxY-task1Result+2)+" "+(maxX-task1Result+2)+" "+(maxY+1));
+        //System.out.println("task1 result is "+ task1Result);
+        System.out.println("Task1: "+(maxX+1)+" "+(maxY-task1Result+2)+" "+(maxX-task1Result+2)+" "+(maxY+1));
         ALG1TASK2(towers,5);
         System.out.println("Task2: "+maxX+" "+(maxY-task1Result+1)+" "+(maxX-task1Result+1)+" "+(maxY));
         ALG2TASK3(5);
         ALG3TASK4(5);
         ALG3TASK5(5);
 
-        System.out.println(task1Result*task1Result);
+        /*System.out.println(task1Result*task1Result);
         for (int i=0;i<memoization.length;i++){
             for (int j=0;j<memoization[0].length;j++){
                 System.out.print(memoization[i][j]+" ");
             }
             System.out.println();
-        }
+        }*/
 
     }
 }
