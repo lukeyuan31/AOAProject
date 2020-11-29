@@ -7,10 +7,8 @@ public class AlgoTowers {
     static int task1Result=0;
     static int maxX;
     static int maxY;
+    //static long period;
     public static int ALG1TASK1(int x,int y,int h){
-        //int maxX=0;
-        //int maxY=0;
-
         //The implementation of task1, a recursive implementation of ALG1 using memoization and O(mn) space.
 
         if (x==0 || y==0){
@@ -46,7 +44,7 @@ public class AlgoTowers {
 
             }
     }
-    public static int ALG1TASK2(int[][] input,int h){
+    public static void ALG1TASK2(int[][] input,int h){
 
         //The implementation of task2, a BottomUp implementation of ALG1 and O(n) space
 
@@ -74,33 +72,11 @@ public class AlgoTowers {
                 }
                 pre=temp;
             }
-            /*for (int x:dp){
-                System.out.print(x+" ");
-            }
-            System.out.println();*/
+
 
         }
+        System.out.println((maxX-result+1)+" "+(maxY-result+1)+" "+maxX+" "+(maxY));
 
-        /*for (int j=0;j<height;j++){
-            if (input[j][0]>=h){
-                dp[j][0]=1;
-                result=1;
-            }else {
-                dp[j][0]=0;
-            }
-        }*/
-        //int result=0;
-        /*for (int i=1;i<height;i++){
-            for (int j=1;j<len;j++){
-                if (input[i][j]>=h){
-                    dp[i][j]=Math.min(Math.min(dp[i-1][j],dp[i][j-1]),dp[i-1][j-1])+1;
-                }
-                result=Math.max(result,dp[i][j]);
-            }
-        }*/
-
-        //System.out.println(result*result);
-        return result*result;
     }
     public static boolean isRectangle(int x1,int y1,int x2,int y2,int h){
         for (int i=x1;i<=x2;i++){
@@ -138,11 +114,11 @@ public class AlgoTowers {
             }
         }
         //System.out.println("Task3 "+result);
-        System.out.println("Task3 "+(printX2+1)+" "+(printY1+1)+" "+(printX1+1)+" "+(printY2+1));
+        System.out.println((printX1+1)+" "+(printY1+1)+" "+(printX2+1)+" "+(printY2+1));
         //return result;
     }
 
-    public static int ALG3TASK4(int h){
+    public static void ALG3TASK4(int h){
         int row=towers.length;
         int col=towers[0].length;
         int[][] dp=new int[row][col];
@@ -174,10 +150,10 @@ public class AlgoTowers {
                 }
             }
         }
-        System.out.println("Task4: "+x1+" "+y1+" "+x2+" "+y2);
-        return result;
+        System.out.println(x2+" "+y1+" "+x1+" "+y2);
+        //return result;
     }
-    public static int ALG3TASK5(int h){
+    public static void ALG3TASK5(int h){
         int row=towers.length;
         int col=towers[0].length;
         int[] left=new int[col];
@@ -227,8 +203,8 @@ public class AlgoTowers {
             }
 
         }
-        System.out.println("task5+ "+x1+" "+y1+" "+x2+" "+y2);
-        return result;
+        System.out.println(x2+" "+y1+" "+x1+" "+y2);
+        //return result;
 
     }
 
@@ -237,7 +213,7 @@ public class AlgoTowers {
         String[] firstLine=sc.nextLine().split(" ");
         int m=Integer.parseInt(firstLine[0]);
         int n=Integer.parseInt(firstLine[1]);
-        int p=Integer.parseInt(firstLine[2]);
+        int h=Integer.parseInt(firstLine[2]);
         towers=new int[m][n];
         memoization=new int[m][n];
         for (int i=0;i<m;i++){
@@ -254,23 +230,56 @@ public class AlgoTowers {
         }
         System.out.println();
 
-
-        ALG1TASK1(m-1,n-1,5);
-        //System.out.println("task1 result is "+ task1Result);
-        System.out.println("Task1: "+(maxX+1)+" "+(maxY-task1Result+2)+" "+(maxX-task1Result+2)+" "+(maxY+1));
-        ALG1TASK2(towers,5);
-        System.out.println("Task2: "+maxX+" "+(maxY-task1Result+1)+" "+(maxX-task1Result+1)+" "+(maxY));
-        ALG2TASK3(5);
-        ALG3TASK4(5);
-        ALG3TASK5(5);
-
-        /*System.out.println(task1Result*task1Result);
-        for (int i=0;i<memoization.length;i++){
-            for (int j=0;j<memoization[0].length;j++){
-                System.out.print(memoization[i][j]+" ");
+        /*switch (args[0]){
+            case "1":{
+                ALG1TASK1(m-1,n-1,h);
+                System.out.println((maxX-task1Result+2)+" "+(maxY-task1Result+2)+" "+(maxX+1)+" "+(maxY+1));
+                break;
             }
-            System.out.println();
+            case "2":{
+                ALG1TASK2(towers,h);
+                break;
+            }
+            case "3":{
+                ALG2TASK3(h);
+                break;
+            }
+            case "4":{
+                ALG3TASK4(h);
+                break;
+            }
+            case "5":{
+                ALG3TASK5(h);
+                break;
+            }
         }*/
+        long start=System.nanoTime();
+        ALG1TASK1(m-1,n-1,h);
+        long end=System.nanoTime();
+        System.out.println((maxX-task1Result+2)+" "+(maxY-task1Result+2)+" "+(maxX+1)+" "+(maxY+1));
+        System.out.println("Time is "+ (end-start) +" nano seconds");
+        //System.out.println("task1 result is "+ task1Result);
+
+        start=System.nanoTime();
+        ALG1TASK2(towers,h);
+        end=System.nanoTime();
+        System.out.println("Time is "+ (end-start)+" nano seconds");
+
+        start=System.nanoTime();
+        ALG2TASK3(h);
+        end=System.nanoTime();
+        System.out.println("Time is "+ (end-start)+ "nano seconds");
+
+        start=System.nanoTime();
+        ALG3TASK4(h);
+        end=System.nanoTime();
+        System.out.println("Time is "+ (end-start)+ "nano seconds");
+
+        start=System.nanoTime();
+        ALG3TASK5(h);
+        end=System.nanoTime();
+        System.out.println("Time is "+ (end-start)+ "nano seconds");
+
 
     }
 }
