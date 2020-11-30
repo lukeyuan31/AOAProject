@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -208,29 +212,45 @@ public class AlgoTowers {
 
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
+        //--------------------实际使用部分
         Scanner sc=new Scanner(System.in);
         String[] firstLine=sc.nextLine().split(" ");
+        //--------------------分割线------------
+        //--------------------测试部分----------
+        /*BufferedReader bufferedReader=new BufferedReader(new FileReader("/Users/lukeyuan/Downloads/Study/Analysis of Algorithms/AOAProject/src/3000x3000"));
+        String str;
+        str=bufferedReader.readLine();
+        String []firstLine=str.split(" ");*/
+        //--------------------分割线--------------
+
         int m=Integer.parseInt(firstLine[0]);
         int n=Integer.parseInt(firstLine[1]);
         int h=Integer.parseInt(firstLine[2]);
         towers=new int[m][n];
         memoization=new int[m][n];
         for (int i=0;i<m;i++){
+            /*str=bufferedReader.readLine();
+            String[] temp=str.split(" ");*/
             for (int j=0;j<n;j++){
+                //--------实际--------
                 towers[i][j]=sc.nextInt();
+                //----------测试--------
+                //towers[i][j]=Integer.parseInt(temp[j]);
                 //System.out.print(towers[i][j]);
             }
             //System.out.println();
         }
+
+
         for (int i=0;i<memoization.length;i++){
             for (int j=0;j<memoization[0].length;j++){
                 memoization[i][j]=Integer.MIN_VALUE;
             }
         }
-        System.out.println();
+        //System.out.println();
 
-        /*switch (args[0]){
+        switch (args[0]){
             case "1":{
                 ALG1TASK1(m-1,n-1,h);
                 System.out.println((maxX-task1Result+2)+" "+(maxY-task1Result+2)+" "+(maxX+1)+" "+(maxY+1));
@@ -252,34 +272,34 @@ public class AlgoTowers {
                 ALG3TASK5(h);
                 break;
             }
-        }*/
-        long start=System.nanoTime();
+        }
+        /*long start=System.nanoTime();
         ALG1TASK1(m-1,n-1,h);
         long end=System.nanoTime();
         System.out.println((maxX-task1Result+2)+" "+(maxY-task1Result+2)+" "+(maxX+1)+" "+(maxY+1));
-        System.out.println("Time is "+ (end-start) +" nano seconds");
+        //System.out.println("Time is "+ (end-start) +" nano seconds");
         //System.out.println("task1 result is "+ task1Result);
 
         start=System.nanoTime();
         ALG1TASK2(towers,h);
         end=System.nanoTime();
-        System.out.println("Time is "+ (end-start)+" nano seconds");
+        //System.out.println("Time is "+ (end-start)+" nano seconds");
 
         start=System.nanoTime();
         ALG2TASK3(h);
         end=System.nanoTime();
-        System.out.println("Time is "+ (end-start)+ "nano seconds");
+        //System.out.println("Time is "+ (end-start)+ "nano seconds");
 
         start=System.nanoTime();
         ALG3TASK4(h);
         end=System.nanoTime();
-        System.out.println("Time is "+ (end-start)+ "nano seconds");
+        //System.out.println("Time is "+ (end-start)+ "nano seconds");
 
         start=System.nanoTime();
         ALG3TASK5(h);
         end=System.nanoTime();
-        System.out.println("Time is "+ (end-start)+ "nano seconds");
-
+        //System.out.println("Time is "+ (end-start)+ "nano seconds");
+*/
 
     }
 }
